@@ -1,0 +1,52 @@
+#  2018-10-27
+#  将图片转化为符号串进行显示
+#
+#
+from PIL import Image
+import argparse 
+
+
+IMG='D:\\fish.jpg'
+WIDTH=30
+HEIGHT=30
+str1=list("!@#$%^)(*&^%$#@!@#$%^&*dbfkdfiweuroweff")
+def get_char(r,g,b,alpha=256):
+
+    
+    length=len(str1)
+    gray=int(0.2126*r+0.7152*g+0.0722*b) #测量灰度值
+    unit=(alpha+1)/length
+    return str1[int(gray/unit)]
+
+
+def get_count(r,g,b,alpha=256):
+     if alpha==0:
+         return ''
+     length=len(str1)
+     gray=int(0.2126*r+0.7152*g+0.0722*b) 
+     if gray <=50:
+         return '@'
+     elif gray<=100:
+         return '&'
+     elif gray<=150:
+         return '^'
+     elif gray<=200:
+         return '^'
+     elif gray<=255:
+         return ' '
+
+if __name__=="__main__":
+
+ im=Image.open(IMG) 
+ im=im.resize((WIDTH,HEIGHT),Image.NEAREST)
+ txt=""
+ for i in range(WIDTH):
+    for j in range(HEIGHT):
+        #txt+=get_char(*im.getpixel((j,i)))
+         txt+=" "+str(get_count(*im.getpixel((j,i)))) 
+         #getpixel方法解析获取(j,i)坐标上的r,g,b的值,该函数返回一个元组(r,g,b)
+    txt+='\n' 
+ print(txt) 
+ #存储在文件中
+ with open("D:/he.txt",'w') as f :
+     f.write(txt)
