@@ -1,7 +1,7 @@
 #  2018-10-27
 #  将图片转化为符号串进行显示
 #
-#
+#  刚开始效果不是很好，所以将图片转化为四个字符串进行输出
 from PIL import Image
 import argparse 
 
